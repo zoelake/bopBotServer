@@ -2,11 +2,11 @@ const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 const ObjectId = Schema.ObjectId;
 
-const playlistSchema = new Schema({
+const PlaylistSchema = new Schema({
   name: String,
   tracks: Array,
   img: String,
-  date: Date.now,
+  date: Date,
   public: Boolean,
 });
 
