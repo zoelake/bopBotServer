@@ -1,16 +1,4 @@
-const mongoose = require('mongoose');
-const Schema = mongoose.Schema;
-const ObjectId = Schema.ObjectId;
-
-const PlaylistSchema = new Schema({
-  name: String,
-  tracks: Array,
-  img: String,
-  date: Date,
-  public: Boolean,
-});
-
-const Playlist = mongoose.model('Playlist', PlaylistSchema)
+const Playlist = require('../Models/playlist')
 
 const getPlaylists =  (req, res) => {
     // res.json(Todos);
@@ -26,7 +14,11 @@ const createPlaylist = (req,res)=>{
     playlist.img = req.body.img
     playlist.date = req.body.date
     playlist.public = req.body.public
-    playlist.save()
+    playlist.save((err, data) => {
+        if(err) return res.status(400).send('Something went wrong :(');
+        res.status(201).send('Created successfully')
+    })
+    // res.send();
 }
 
 const getPlaylistById = (req,res)=>{

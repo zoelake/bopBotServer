@@ -1,14 +1,4 @@
-const mongoose = require('mongoose');
-const Schema = mongoose.Schema;
-const ObjectId = Schema.ObjectId;
-
-const UserSchema = new Schema({
-    name: String,
-    password: String,
-    avatar: String,
-});
-
-const User = mongoose.model('User', UserSchema)
+const User = require('../Models/user');
 
 const getUsers = (req, res) => {
     // res.json(Todos);
@@ -20,9 +10,13 @@ const getUsers = (req, res) => {
 const createUser = (req, res) => {
     const user = new User()
     user.name = req.body.name
-    user.password = req.body.password
-    user.avatar = req.body.avatar
-    playlist.save()
+    user.psw = req.body.psw
+    user.avt = req.body.avt
+    user.save((err, data) => {
+        if(err) return res.status(400).send('Something went wrong :( ' + err);
+        res.status(201).send('Created successfully')
+    })
+    // res.send();
 }
 
 const getUserById = (req, res) => {
