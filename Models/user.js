@@ -4,9 +4,9 @@ const ObjectId = Schema.ObjectId;
 
 const UserSchema = new Schema({
     name: String,
-    psw: String,
+    pwd: String,
     avt: String,
-});
+},{timestamps:true});
 
 // PlaylistSchema.pre('save', function (next) {
 //     let d = new Date(this.date)

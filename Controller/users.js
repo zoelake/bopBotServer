@@ -10,10 +10,10 @@ const getUsers = (req, res) => {
 const createUser = (req, res) => {
     const user = new User()
     user.name = req.body.name
-    user.psw = req.body.psw
+    user.pwd = req.body.pwd
     user.avt = req.body.avt
     user.save((err, data) => {
-        if(err) return res.status(400).send('Something went wrong :( ' + err);
+        if (err) return res.status(400).send('Something went wrong :( ' + err);
         res.status(201).send('Created successfully')
     })
     // res.send();
