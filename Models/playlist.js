@@ -7,7 +7,8 @@ const PlaylistSchema = new Schema({
     tracks: { type: [], default: [] },
     img: String,
     public: { type: Boolean, default: true },
-}, {timestamps:true});
+    owner: { type: mongoose.Schema.ObjectId, ref: 'User' }
+}, { timestamps: true });
 
 
 const Playlist = mongoose.model('Playlist', PlaylistSchema)

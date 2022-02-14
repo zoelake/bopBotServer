@@ -6,7 +6,7 @@ const UserSchema = new Schema({
     name: String,
     pwd: String,
     avt: String,
-},{timestamps:true});
+}, { timestamps: true });
 
 // PlaylistSchema.pre('save', function (next) {
 //     let d = new Date(this.date)

@@ -14,4 +14,4 @@ app.use(express.json())
 
 app.use(playlistRouter);
 app.use(userRouter);
-app.listen(3001, () => console.log('server running on 3001!!!'));
+app.listen(3000, () => console.log('server running on 3000!!!'));
