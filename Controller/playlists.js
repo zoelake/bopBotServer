@@ -2,7 +2,7 @@ const Playlist = require('../Models/playlist')
 
 const getPlaylists = (req, res) => {
     // res.json(Todos);
-    Playlist.find({}, (err, data) => {
+    Playlist.find({}, (err, playlists) => {
         res.json(data)
     })
 }
