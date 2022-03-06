@@ -23,12 +23,24 @@ const createPlaylist = (req, res) => {
 }
 
 const getPlaylistById = (req, res) => {
-    let playlist = Playlists.filter(item => item.id == request.params.id)
+    let playlist = Playlist.filter(item => item.id == request.params.id)
     res.json(playlist)
+}
+
+const addToLikedPlaylist = (req, res) => {
+    let likedPlaylist = Playlist.findOneAndUpdate({
+        name: 'Liked'
+    }, {
+        $push: {
+            tracks: req.body.track,
+        },
+    })
+    res.json(likedPlaylist)
 }
 
 module.exports = {
     getPlaylists,
     createPlaylist,
     getPlaylistById,
+    addToLikedPlaylist,
 }

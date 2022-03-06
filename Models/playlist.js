@@ -4,7 +4,7 @@ const ObjectId = Schema.ObjectId;
 
 const PlaylistSchema = new Schema({
     name: { type: String, default: 'Untitled Playlist', unique: true },
-    tracks: { type: [], default: [] },
+    tracks: { type: {}, default: {} },
     img: String,
     public: { type: Boolean, default: true },
     owner: { type: mongoose.Schema.ObjectId, ref: 'User' }
