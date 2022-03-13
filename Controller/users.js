@@ -2,26 +2,35 @@ const User = require('../Models/user');
 const jwt = require('jsonwebtoken');
 
 const signup = (req, res) => {
-    const user = new User();
-    user.name = req.body.name
-    user.email = req.body.email
-    user.password = req.body.password
-    user.avatar = req.body.avatar
-    user.save((err, done) => {
-        if (err) return res.status(500).send('sign up failed :(')
-        res.status(201).send('signed up successfully!')
+    User.findOne({ email: req.body.email }, (err, user) => {
+        if (user) {
+            return res.status(409).send("email already in use")
+        } else {
+            const user = new User();
+            user.name = req.body.name
+            user.email = req.body.email
+            user.password = req.body.password
+            user.avatar = req.body.avatar
+            user.save((err, done) => {
+                if (err) return res.status(500).send('sign up failed :(')
+                res.status(201).send('signed up successfully!')
+            })
+        }
     })
+
+
 }
 
 const login = (req, res) => {
     User.findOne({ email: req.body.email }, (err, user) => {
-        if (err || !user) return res.status(404).send('user not found :(')
-console.log(user)
+        if (err || !user) return res.status(404).send('user not found')
+        // console.log(user)
         if (user.comparePassword(req.body.password)) {
             const token = jwt.sign({ id: user._id }, 'thisismysecret');
-            res.send(token)
+            res.status(200).send(user)
         } else {
-            res.send('could not login')
+            // res.send('could not login')
+            return res.status(404).send('something went wrong')
         }
     })
 }

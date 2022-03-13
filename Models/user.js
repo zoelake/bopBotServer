@@ -8,14 +8,15 @@ const UserSchema = new Schema({
     email: String,
     password: String,
     avatar: String,
+    playlists: [{ type: ObjectId, ref: 'playlists' }],
 }, { timestamps: true });
 
 UserSchema.pre('save', function (next) {
 
     const user = this;
 
-    bcrypt.genSalt(10, function(err, salt) {
-        bcrypt.hash(user.password, salt, function(err, hash) {
+    bcrypt.genSalt(10, function (err, salt) {
+        bcrypt.hash(user.password, salt, function (err, hash) {
             // Store hash in your password DB.
             user.password = hash
             next()

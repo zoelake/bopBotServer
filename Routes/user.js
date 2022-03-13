@@ -7,7 +7,13 @@ const {signup, login} = require('../Controller/users')
 // router.post('/new/user', createUser)
 // router.get('/user/:id', getUserById)
 
+//sign user in 
 router.post('/signup', signup)
+
+
+//create new user
 router.post('/login', login)
+
+//UPDATE USER
 
 module.exports = router;

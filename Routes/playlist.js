@@ -5,14 +5,17 @@ const authorizeUser = require('../Auth/auth')
 
 
 
+// router.get('/playlist/:id', getPlaylistById)
 
+//load playlists after authorizing user
 router.get('/playlists', authorizeUser, getPlaylists)
 
+//create a new playlist
 router.post('/new/playlist', createPlaylist)
 
-
-router.get('/playlist/:id', getPlaylistById)
-
+//add tracks to liked playlist?
 router.patch('new/playlist/liked', addToLikedPlaylist)
+
+
 
 module.exports = router;
