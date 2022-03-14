@@ -30,7 +30,7 @@ const login = (req, res) => {
             res.status(200).send(user)
         } else {
             // res.send('could not login')
-            return res.status(404).send('something went wrong')
+            return res.status(404).send('something went wrong :(')
         }
     })
 }
