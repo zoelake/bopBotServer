@@ -10,10 +10,10 @@ const getPlaylists = (req, res) => {
 const createPlaylist = (req, res) => {
     const playlist = new Playlist()
     playlist.name = req.body.name
-    playlist.tracks = req.body.tracks
-    playlist.img = req.body.img
+    // playlist.tracks = req.body.tracks
+    // playlist.img = req.body.img
+    // playlist.public = req.body.public
     playlist.date = req.body.date
-    playlist.public = req.body.public
     playlist.owner = req.body.owner
     playlist.save((err, data) => {
         if (err) return res.status(400).send('Something went wrong :(');
@@ -42,5 +42,6 @@ module.exports = {
     getPlaylists,
     createPlaylist,
     getPlaylistById,
+    
     addToLikedPlaylist,
 }

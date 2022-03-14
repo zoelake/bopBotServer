@@ -5,11 +5,24 @@ const bcrypt = require('bcryptjs');
 
 const UserSchema = new Schema({
     name: String,
-    email: String,
+    email: {
+        type: String,
+        lowercase:true,
+    },
     password: String,
     avatar: String,
     playlists: [{ type: ObjectId, ref: 'playlists' }],
-}, { timestamps: true });
+    liked: [{type: ObjectId, ref:'tracks'}],
+    createdAt:{
+        type:Date,
+        default: () => Date.now(),
+        immutable:true,
+    },
+    updatedAt: {
+        type:Date,
+        default: () => Date.now(),
+    }
+});
 
 UserSchema.pre('save', function (next) {
 
