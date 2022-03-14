@@ -35,9 +35,28 @@ const login = (req, res) => {
     })
 }
 
+const updateName = (req, res) => {
+    console.log(req.body)
+    User.updateOne({ name: req.body.name }, { $set: { name: req.body.newName } }, (err, user) => {
+
+        res.status(200).send(req.body.newName)
+    })
+}
+
+const updateEmail = (req, res) => {
+    console.log(req.body)
+    User.updateOne({ email: req.body.email }, { $set: { email: req.body.newEmail } }, (err, user) => {
+
+        res.status(200).send(req.body.newEmail)
+    })
+}
+
+
 module.exports = {
     signup,
-    login
+    login,
+    updateName,
+    updateEmail
 }
 
 // const getUsers = (req, res) => {

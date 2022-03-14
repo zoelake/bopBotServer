@@ -1,6 +1,6 @@
 const express = require('express');
 const router = express.Router();
-const {signup, login} = require('../Controller/users')
+const { signup, login, updateName, updateEmail } = require('../Controller/users')
 // const {getUsers, createUser, getUserById} = require('../Controller/users');
 
 // router.get('/users', getUsers)
@@ -15,5 +15,7 @@ router.post('/signup', signup)
 router.post('/login', login)
 
 //UPDATE USER
+router.post('/update-userName', updateName)
+router.post('/update-userEmail', updateEmail)
 
 module.exports = router;
