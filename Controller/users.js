@@ -51,12 +51,21 @@ const updateEmail = (req, res) => {
     })
 }
 
+const createPlaylist = (req, res) => {
+    console.log(req.body)
+    
+    User.findOne({email: req.body.email}, {$push: {playlist: req.body.name}}, (err, user) => {
+        res.status(200).send(user.playlists)
+    })
+}
+
 
 module.exports = {
     signup,
     login,
     updateName,
-    updateEmail
+    updateEmail,
+    createPlaylist,
 }
 
 // const getUsers = (req, res) => {
