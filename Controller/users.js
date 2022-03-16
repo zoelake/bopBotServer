@@ -51,19 +51,33 @@ const updateEmail = (req, res) => {
     })
 }
 
+// const getPlaylists = (req, res) => {
+//     console.log('getting playlists: ')
+//     console.log(req)
+//     User.findOne({ email: req.body.user }, (err, user) => {
+//         console.log(user)
+//         if (user) {
+//             res.status(200).send(user)
+//         } else {
+//             // res.send('could not login')
+//             return res.status(404).send('something went wrong :(')
+//         }
+//     })
+
+// }
+
 const getPlaylists = (req, res) => {
-    console.log('getting playlists: ')
-    console.log(req.body)
-    User.findOne({ email: 'zoe_lake@icloud.com' }, (err, user) => {
-        if (err || !user) return res.status(404).send('user not found')
-        // console.log(user)
+    console.log('getting playlists:')
+    console.log(req.body.user)
+    User.findOne({ email: req.body.user }, (err, user) => {
+        console.log(user)
         if (user) {
-            res.status(200).send(user)
-        } else {
-            // res.send('could not login')
-            return res.status(404).send('something went wrong :(')
+            return res.status(200).send(user)
         }
+        if (err) return res.status(500).send('something went wrong')
     })
+
+
 }
 
 const createPlaylist = (req, res) => {
