@@ -51,10 +51,24 @@ const updateEmail = (req, res) => {
     })
 }
 
+const getPlaylists = (req, res) => {
+    console.log('getting playlists: ')
+    console.log(req.body)
+    User.findOne({ email: 'zoe_lake@icloud.com' }, (err, user) => {
+        if (err || !user) return res.status(404).send('user not found')
+        // console.log(user)
+        if (user) {
+            res.status(200).send(user)
+        } else {
+            // res.send('could not login')
+            return res.status(404).send('something went wrong :(')
+        }
+    })
+}
 
 const createPlaylist = (req, res) => {
     console.log('creating')
-    console.log(req.body)
+    console.log(req.body.user)
     User.updateOne({ email: req.body.user },
         {
             $addToSet: {
@@ -107,6 +121,7 @@ module.exports = {
     login,
     updateName,
     updateEmail,
+    getPlaylists,
     createPlaylist,
     updatePlaylist,
     deletePlaylist

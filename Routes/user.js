@@ -1,6 +1,6 @@
 const express = require('express');
 const router = express.Router();
-const { signup, login, updateName, updateEmail, createPlaylist, updatePlaylist, deletePlaylist } = require('../Controller/users')
+const { signup, login, updateName, updateEmail, getPlaylists, createPlaylist, updatePlaylist, deletePlaylist } = require('../Controller/users')
 // const {getUsers, createUser, getUserById} = require('../Controller/users');
 
 // router.get('/users', getUsers)
@@ -18,9 +18,11 @@ router.post('/login', login)
 router.post('/update-userName', updateName)
 router.post('/update-userEmail', updateEmail)
 
-//ADD NEW PLAYLIST  
+//PLAYLISTS
+router.get('/get-playlists', getPlaylists)
 router.post('/create-playlist', createPlaylist)
 router.post('/delete-playlist', deletePlaylist)
 router.post('/update-playlist', updatePlaylist)
+
 
 module.exports = router;

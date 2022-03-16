@@ -9,7 +9,7 @@ const config = require('./config')
 
 
 mongoose.connect(config.MONGODB_URL, (e) => {
-    console.log('db error?' + e)
+   if(e) return console.log(e)
 })
 
 app.use(cors());
@@ -18,4 +18,4 @@ app.use(express.json())
 app.use(playlistRouter);
 app.use(userRouter);
 app.use(trackRouter);
-app.listen(3001, () => console.log('server running on 3001!!!'));
+app.listen(3001, () => console.log('server live @ 3001'));
