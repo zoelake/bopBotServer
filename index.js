@@ -3,6 +3,7 @@ const app = express();
 const cors = require('cors')
 const playlistRouter = require('./Routes/playlist.js');
 const userRouter = require('./Routes/user.js');
+const trackRouter = require('./Routes/track.js');
 const mongoose = require('mongoose');
 const config = require('./config')
 
@@ -16,4 +17,5 @@ app.use(express.json())
 
 app.use(playlistRouter);
 app.use(userRouter);
+app.use(trackRouter);
 app.listen(3001, () => console.log('server running on 3001!!!'));
