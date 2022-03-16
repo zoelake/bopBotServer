@@ -13,13 +13,14 @@ const signup = (req, res) => {
             user.avatar = req.body.avatar
             user.save((err, done) => {
                 if (err) return res.status(500).send('sign up failed :(')
-                res.status(201).send('signed up successfully!')
+                res.status(200).send(user)
             })
         }
     })
 
 
 }
+
 
 const login = (req, res) => {
     User.findOne({ email: req.body.email }, (err, user) => {
@@ -34,7 +35,6 @@ const login = (req, res) => {
         }
     })
 }
-
 const updateName = (req, res) => {
     console.log(req.body)
     User.updateOne({ name: req.body.name }, { $set: { name: req.body.newName } }, (err, user) => {
@@ -51,13 +51,55 @@ const updateEmail = (req, res) => {
     })
 }
 
+
 const createPlaylist = (req, res) => {
+    console.log('creating')
     console.log(req.body)
-    
-    User.findOne({email: req.body.email}, {$push: {playlist: req.body.name}}, (err, user) => {
-        res.status(200).send(user.playlists)
-    })
+    User.updateOne({ email: req.body.user },
+        {
+            $addToSet: {
+                playlists: {
+                    name: req.body.playlist_name,
+                    img: req.body.playlist_img,
+                },
+            }
+        }, (err) => {
+            if (err) return res.status(500).send('sign up failed :(')
+            res.status(200).send(req.body.playlist_name)
+        })
 }
+
+const updatePlaylist = (req, res) => {
+    console.log('updating:')
+    console.log(req.body)
+    User.updateOne({ email: req.body.user, 'playlists.name': req.body.playlist_name },
+        {
+            '$set': {
+                'playlists.$.name': req.body.playlist_newName,
+                'playlists.$.img': req.body.playlist_img,
+            }
+        }, (err) => {
+            if (err) return res.status(500).send('sign up failed :(')
+            res.status(200).send(req.body.playlist_name)
+        })
+}
+
+const deletePlaylist = (req, res) => {
+    console.log('deleted: ')
+    console.log(req.body)
+    User.updateOne({ email: req.body.user },
+        {
+            $pull: {
+                playlists: {
+                    name: req.body.playlist_name,
+                },
+            }
+        }, (err) => {
+            if (err) return res.status(500).send('sign up failed :(')
+            res.status(200).send(req.body.playlist_name)
+        })
+}
+
 
 
 module.exports = {
@@ -66,6 +108,8 @@ module.exports = {
     updateName,
     updateEmail,
     createPlaylist,
+    updatePlaylist,
+    deletePlaylist
 }
 
 // const getUsers = (req, res) => {
