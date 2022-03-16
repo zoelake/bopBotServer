@@ -68,7 +68,7 @@ const updateEmail = (req, res) => {
 
 const getPlaylists = (req, res) => {
     console.log('getting playlists:')
-    console.log(req.body.user)
+    console.log(req.body)
     User.findOne({ email: req.body.user }, (err, user) => {
         console.log(user)
         if (user) {
