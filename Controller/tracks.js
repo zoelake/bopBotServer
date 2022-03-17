@@ -1,5 +1,7 @@
 
+const { request } = require('express')
 const Track = require('../Models/track')
+const User = require('../Models/user')
 
 const getTracks = (req, res) => {
     console.log('loading tracks')
@@ -7,8 +9,7 @@ const getTracks = (req, res) => {
         console.log(tracks)
         if (err) return res.status(409).send('something went wrong')
         res.status(200).send(tracks)
-    })
-    // .limit(10)
+    }).limit(10)
 
 }
 
@@ -35,11 +36,41 @@ const makeTrack = (req, res) => {
 
 }
 
+const addTrackToLiked = (req, res) => {
+    console.log(`adding ${req.body.track.Title} to likes!`)
+    User.updateOne({ email: req.body.user },
+        {
+            $push: {
+                liked: req.body.track,
+            }
+        }, (err) => {
+            if (err) return res.status(500).send('something went wrong')
+            res.status(200).send(` ${req.body.track.Title} was added to likes!`)
+        })
+
+}
+
+const addTrackToPlaylist = (req, res) => {
+    console.log(`adding ${req.body.track.Title} to ${req.body.playlist_name}!`)
+    User.updateOne({ email: req.body.user, 'playlists.name': req.body.playlist_name },
+        {
+            $push: {
+                'playlists.$.tracks': req.body.track,
+            }
+        }, (err) => {
+            if (err) return res.status(500).send('something went wrong')
+            res.status(200).send('track added to' + req.body.playlist_name)
+        })
+
+}
+
 
 module.exports = {
     getTracks,
     getTrackById,
     makeTrack,
+    addTrackToLiked,
+    addTrackToPlaylist,
 }
 
 

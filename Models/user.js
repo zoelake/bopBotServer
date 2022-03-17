@@ -2,7 +2,8 @@ const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 const ObjectId = Schema.ObjectId;
 const bcrypt = require('bcryptjs');
-const Playlist  = require('./playlist').schema;
+const Playlist = require('./playlist').schema;
+const Track = require('./track').schema;
 
 const UserSchema = new Schema({
     name: String,
@@ -14,7 +15,7 @@ const UserSchema = new Schema({
     password: String,
     avatar: String,
     playlists: [Playlist],
-    liked: [{ type: ObjectId, ref: 'tracks' }],
+    liked: [Track],
     createdAt: {
         type: Date,
         default: () => Date.now(),
