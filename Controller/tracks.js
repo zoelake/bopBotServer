@@ -9,7 +9,8 @@ const getTracks = (req, res) => {
         console.log(tracks)
         if (err) return res.status(409).send('something went wrong')
         res.status(200).send(tracks)
-    }).limit(10)
+    })
+    // .limit(10)
 
 }
 

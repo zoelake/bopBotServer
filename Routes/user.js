@@ -1,6 +1,6 @@
 const express = require('express');
 const router = express.Router();
-const { signup, login, updateName, updateEmail, getPlaylists, createPlaylist, updatePlaylist, deletePlaylist } = require('../Controller/users')
+const { signup, login, updateName, updateEmail, getPlaylists, getAPlaylist, createPlaylist, updatePlaylist, deletePlaylist } = require('../Controller/users')
 // const {getUsers, createUser, getUserById} = require('../Controller/users');
 
 // router.get('/users', getUsers)
@@ -20,6 +20,7 @@ router.post('/update-userEmail', updateEmail)
 
 //PLAYLISTS
 router.post('/get-playlists', getPlaylists)
+router.get('/get-a-playlist', getAPlaylist)
 router.post('/create-playlist', createPlaylist)
 router.post('/delete-playlist', deletePlaylist)
 router.post('/update-playlist', updatePlaylist)

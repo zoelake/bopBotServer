@@ -1,4 +1,5 @@
 const User = require('../Models/user');
+const Playlist = require('../Models/playlist');
 const jwt = require('jsonwebtoken');
 
 const signup = (req, res) => {
@@ -51,20 +52,6 @@ const updateEmail = (req, res) => {
     })
 }
 
-// const getPlaylists = (req, res) => {
-//     console.log('getting playlists: ')
-//     console.log(req)
-//     User.findOne({ email: req.body.user }, (err, user) => {
-//         console.log(user)
-//         if (user) {
-//             res.status(200).send(user)
-//         } else {
-//             // res.send('could not login')
-//             return res.status(404).send('something went wrong :(')
-//         }
-//     })
-
-// }
 
 const getPlaylists = (req, res) => {
     console.log('getting playlists:')
@@ -74,6 +61,16 @@ const getPlaylists = (req, res) => {
         if (user) {
             return res.status(200).send(user)
         }
+        if (err) return res.status(500).send('something went wrong')
+    })
+
+
+}
+const getAPlaylist = (req, res) => {
+    console.log('getting single playlist:')
+    console.log(req.body)
+    User.where({ 'playlists._id': `ObjectId("${req.body.playlist_id}")` }, (err, playlist) => {
+        res.status(200).send(playlist)
         if (err) return res.status(500).send('something went wrong')
     })
 
@@ -136,6 +133,7 @@ module.exports = {
     updateName,
     updateEmail,
     getPlaylists,
+    getAPlaylist,
     createPlaylist,
     updatePlaylist,
     deletePlaylist
