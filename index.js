@@ -26,5 +26,4 @@ app.get("/", function (req, res) {
 app.use(playlistRouter);
 app.use(userRouter);
 app.use(trackRouter);
-
 app.listen(process.env.PORT || 3001, () => console.log('server is live'));
