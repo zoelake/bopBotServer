@@ -13,6 +13,8 @@ mongoose.connect(config.MONGODB_URL, (e) => {
 })
 
 app.use(cors());
+
+
 app.use(express.json())
 
 app.use(playlistRouter);
