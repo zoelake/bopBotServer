@@ -54,10 +54,10 @@ const updateEmail = (req, res) => {
 
 
 const getPlaylists = (req, res) => {
-    console.log('getting playlists:')
-    console.log(req.body)
+    // console.log('getting playlists:')
+    // console.log(req.body)
     User.findOne({ email: req.body.user }, (err, user) => {
-        console.log(user)
+        // console.log(user)
         if (user) {
             return res.status(200).send(user)
         }
@@ -73,7 +73,6 @@ const getAPlaylist = (req, res) => {
         res.status(200).send(playlist)
         if (err) return res.status(500).send('something went wrong')
     })
-
 
 }
 
@@ -96,7 +95,7 @@ const createPlaylist = (req, res) => {
 
 const updatePlaylist = (req, res) => {
     console.log('updating:')
-    console.log(req.body)
+    console.log(req.body.playlist_name)
     User.updateOne({ email: req.body.user, 'playlists.name': req.body.playlist_name },
         {
             '$set': {
@@ -105,7 +104,7 @@ const updatePlaylist = (req, res) => {
             }
         }, (err) => {
             if (err) return res.status(500).send('sign up failed :(')
-            res.status(200).send(req.body.playlist_name)
+            res.status(200).send(`${req.body.playlist_name} was updated to ${req.body.playlist_newName}`);
         })
 }
 

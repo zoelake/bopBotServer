@@ -77,7 +77,7 @@ const addTrackToPlaylist = (req, res) => {
             }
         }, (err) => {
             if (err) return res.status(500).send('something went wrong')
-            res.status(200).send('track added to' + req.body.playlist_name)
+            res.status(200).send(`${req.body.track.Title} was added to ${req.body.playlist_name}`)
         })
 
 }

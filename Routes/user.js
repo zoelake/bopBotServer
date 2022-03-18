@@ -20,7 +20,7 @@ router.post('/update-userEmail', updateEmail)
 
 //PLAYLISTS
 router.post('/get-playlists', getPlaylists)
-router.get('/get-a-playlist', getAPlaylist)
+router.post('/get-a-playlist', getAPlaylist)
 router.post('/create-playlist', createPlaylist)
 router.post('/delete-playlist', deletePlaylist)
 router.post('/update-playlist', updatePlaylist)
