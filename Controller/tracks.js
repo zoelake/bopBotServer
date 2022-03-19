@@ -67,6 +67,22 @@ const deleteTrackFromLiked = (req, res) => {
 
 }
 
+const deleteTrackFromPlaylist = (req, res) => {
+    console.log(req.body)
+    console.log(`deleting ${req.body.track.Title} from ${req.body.playlist_name}!`)
+    User.updateOne({ email: req.body.user, 'playlists.name': req.body.playlist_name },
+        {
+            '$pull': {
+                'playlists.$.tracks': {
+                    Title: req.body.track.Title
+                }
+            }
+        }, (err) => {
+            if (err) return res.status(500).send('something went wrong')
+            res.status(200).send(`track was deleted from ${req.body.playlist_name}`)
+        })
+
+}
 
 const addTrackToPlaylist = (req, res) => {
     console.log(`adding ${req.body.track.Title} to ${req.body.playlist_name}!`)
@@ -82,19 +98,7 @@ const addTrackToPlaylist = (req, res) => {
 
 }
 
-const deleteTrackFromPlaylist = (req, res) => {
-    console.log(`deleting ${req.body.track.Title} from ${req.body.playlist_name}!`)
-    User.updateOne({ email: req.body.user, 'playlists.name': req.body.playlist_name },
-        {
-            $pull: {
-                'playlists.name.Title': req.body.track.Title,
-            }
-        }, (err) => {
-            if (err) return res.status(500).send('something went wrong')
-            res.status(200).send('track was deleted from' + req.body.playlist_name)
-        })
 
-}
 
 
 module.exports = {

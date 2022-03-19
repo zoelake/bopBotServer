@@ -95,7 +95,7 @@ const createPlaylist = (req, res) => {
 
 const updatePlaylist = (req, res) => {
     console.log('updating:')
-    console.log(req.body.playlist_name)
+    console.log(req.body)
     User.updateOne({ email: req.body.user, 'playlists.name': req.body.playlist_name },
         {
             '$set': {
