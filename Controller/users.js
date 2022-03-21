@@ -1,6 +1,8 @@
 const User = require('../Models/user');
 const Playlist = require('../Models/playlist');
 const jwt = require('jsonwebtoken');
+const bcrypt = require('bcryptjs');
+
 
 const signup = (req, res) => {
     User.findOne({ email: req.body.email }, (err, user) => {
@@ -29,7 +31,8 @@ const login = (req, res) => {
         // console.log(user)
         if (user.comparePassword(req.body.password)) {
             const token = jwt.sign({ id: user._id }, 'thisismysecret');
-            res.status(200).send(user)
+            //dont send over password, use token
+            res.status(200).json({user, token})
         } else {
             // res.send('could not login')
             return res.status(404).send('something went wrong :(')
@@ -52,6 +55,20 @@ const updateEmail = (req, res) => {
     })
 }
 
+const updatePassword = (req, res) => {
+    console.log(req.body)
+
+    User.findOne({ email: req.body.email }, (err, user) => {
+        if (err) return res.status(500).send('no user found')
+        if (user.comparePassword(req.body.password)) {
+            user.password = req.body.new_password;
+        }
+        user.save((err, done) => {
+            if (err) return res.status(500).send('failed to save password')
+            res.status(200).send('password updated')
+        })
+    })
+}
 
 const getPlaylists = (req, res) => {
     // console.log('getting playlists:')
@@ -125,7 +142,6 @@ const deletePlaylist = (req, res) => {
 }
 
 
-
 module.exports = {
     signup,
     login,
@@ -135,7 +151,8 @@ module.exports = {
     getAPlaylist,
     createPlaylist,
     updatePlaylist,
-    deletePlaylist
+    deletePlaylist,
+    updatePassword,
 }
 
 // const getUsers = (req, res) => {

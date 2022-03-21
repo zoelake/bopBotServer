@@ -18,12 +18,13 @@ app.use(cors());
 
 app.use(express.json())
 
+app.use(playlistRouter);
+app.use(userRouter);
+app.use(trackRouter);
+
 app.get("/", function (req, res) {
    res.send("<h1>Welcome to bopBot's backend :)</h1>")
 })
 
 
-app.use(playlistRouter);
-app.use(userRouter);
-app.use(trackRouter);
 app.listen(process.env.PORT || 3001, () => console.log('server is live'));

@@ -11,13 +11,13 @@ const getTracks = (req, res) => {
         res.status(200).send(tracks)
     })
     // .limit(10)
-
 }
 
 const getTrackById = (req, res) => {
     let track = Track.filter(item => item.id == request.params.id)
     res.json(track)
 }
+
 
 const makeTrack = (req, res) => {
     Track.findOne({ Title: req.body.Title }, (err, track) => {
@@ -33,9 +33,8 @@ const makeTrack = (req, res) => {
             })
         }
     })
-
-
 }
+
 
 const addTrackToLiked = (req, res) => {
     console.log(`adding ${req.body.track.Title} to likes!`)
