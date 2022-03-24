@@ -1,4 +1,5 @@
 const Playlist = require('../Models/playlist')
+const User = require('../Models/user')
 
 //load current users playlists
 const getPlaylists = (req, res) => {
