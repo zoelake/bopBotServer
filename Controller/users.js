@@ -72,14 +72,6 @@ const updatePassword = (req, res) => {
     })
 }
 
-// get current user's playlists
-
-
-
-
-
-
-
 
 module.exports = {
     signup,
@@ -102,10 +94,4 @@ module.exports = {
 // const getUserById = (req, res) => {
 //     let user = Users.filter(item => item.id == request.params.id)
 //     res.json(user)
-// }
-
-// module.exports = {
-//     getUsers,
-//     createUser,
-//     getUserById,
 // }

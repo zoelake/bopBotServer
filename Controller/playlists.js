@@ -1,6 +1,22 @@
 const Playlist = require('../Models/playlist')
 const User = require('../Models/user')
 
+// create a new playlist with a name & cover img
+const createPlaylist = (req, res) => {
+    User.updateOne({ email: req.body.user },
+        {
+            $addToSet: {
+                playlists: {
+                    name: req.body.playlist_name,
+                    img: req.body.playlist_img,
+                },
+            }
+        }, (err, user) => {
+            if (err || !user) return res.status(500).send('something went wrong')
+            res.status(200).send(`${req.body.playlist_name} was created!`)
+        })
+}
+
 //load current users playlists
 const getPlaylists = (req, res) => {
     console.log(`getting ${req.body.user}'s playlists`)
@@ -22,21 +38,6 @@ const getAPlaylist = (req, res) => {
 
 }
 
-// create a new playlist with a name & cover img
-const createPlaylist = (req, res) => {
-    User.updateOne({ email: req.body.user },
-        {
-            $addToSet: {
-                playlists: {
-                    name: req.body.playlist_name,
-                    img: req.body.playlist_img,
-                },
-            }
-        }, (err, user) => {
-            if (err || !user) return res.status(500).send('something went wrong')
-            res.status(200).send(`${req.body.playlist_name} was created!`)
-        })
-}
 
 //updating existing selected playlist's name and/or cover img
 const updatePlaylist = (req, res) => {
