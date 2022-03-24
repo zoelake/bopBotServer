@@ -1,19 +1,21 @@
 const express = require('express');
 const router = express.Router();
-const { getTracks, getTrackById, makeTrack, addTrackToLiked, addTrackToPlaylist, deleteTrackFromLiked, deleteTrackFromPlaylist } = require('../Controller/tracks');
+const { getTracks, makeTrack, addTrackToLiked, addTrackToPlaylist, deleteTrackFromLiked, deleteTrackFromPlaylist } = require('../Controller/tracks');
 
-//get all tracks
+//GET ALL
 router.get('/tracks', getTracks)
 
+//CREATE TRACK
 router.post('/new-track', makeTrack)
 
-
-//get track by id
-router.get('/track/:id', getTrackById)
-
+//ADD TO LIKED PLAYLIST
 router.post('/tracks-add-liked', addTrackToLiked)
+//REMOVE FROM LIKED PLAYLIST
 router.post('/tracks-delete-liked', deleteTrackFromLiked)
+
+//ADD TO PLAYLIST
 router.post('/tracks-add-playlist', addTrackToPlaylist)
+//REMOVE FROM  PLAYLIST
 router.post('/tracks-remove-playlist', deleteTrackFromPlaylist)
 
 

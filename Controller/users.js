@@ -3,11 +3,12 @@ const Playlist = require('../Models/playlist');
 const jwt = require('jsonwebtoken');
 const bcrypt = require('bcryptjs');
 
-
+//create a new user, if email isn't already in use
 const signup = (req, res) => {
     User.findOne({ email: req.body.email }, (err, user) => {
+        if (err) return res.status(500).send('server error')
         if (user) {
-            return res.status(409).send("email already in use")
+            return res.status(409).send(`${req.body.email} is already in use`)
         } else {
             const user = new User();
             user.name = req.body.name
@@ -24,42 +25,43 @@ const signup = (req, res) => {
 
 }
 
-
+// log in existing user
 const login = (req, res) => {
     User.findOne({ email: req.body.email }, (err, user) => {
-        if (err || !user) return res.status(404).send('user not found')
-        // console.log(user)
+        if (err || !user) return res.status(404).send(`user with email ${req.body.email} was not found`)
         if (user.comparePassword(req.body.password)) {
             const token = jwt.sign({ id: user._id }, 'thisismysecret');
-            //dont send over password, use token
-            res.status(200).json({user, token})
+            // @zoë change this to sending the token when improving this app later this spring :) 
+            res.status(200).json({user})
         } else {
-            // res.send('could not login')
-            return res.status(404).send('something went wrong :(')
+            return res.status(500).send('server error')
         }
     })
 }
+
+// update current user's name
 const updateName = (req, res) => {
     console.log(req.body)
     User.updateOne({ name: req.body.name }, { $set: { name: req.body.newName } }, (err, user) => {
-
-        res.status(200).send(req.body.newName)
+        if(err || !user) return res.status(500).send('something went wrong')
+        res.status(200).send(`${req.body.name} was updated to ${req.body.newName}`)
     })
 }
 
+// update current user's email
 const updateEmail = (req, res) => {
     console.log(req.body)
     User.updateOne({ email: req.body.email }, { $set: { email: req.body.newEmail } }, (err, user) => {
-
-        res.status(200).send(req.body.newEmail)
+        if(err || !user) return res.status(500).send('server error')
+        res.status(200).send(`${req.body.email} was updated to ${req.body.newEmail}`)
     })
 }
 
+// update current user's password (encrypted)
 const updatePassword = (req, res) => {
     console.log(req.body)
-
     User.findOne({ email: req.body.email }, (err, user) => {
-        if (err) return res.status(500).send('no user found')
+        if (err || !user) return res.status(500).send('no user found')
         if (user.comparePassword(req.body.password)) {
             user.password = req.body.new_password;
         }
@@ -70,76 +72,13 @@ const updatePassword = (req, res) => {
     })
 }
 
-const getPlaylists = (req, res) => {
-    // console.log('getting playlists:')
-    // console.log(req.body)
-    User.findOne({ email: req.body.user }, (err, user) => {
-        // console.log(user)
-        if (user) {
-            return res.status(200).send(user)
-        }
-        if (err) return res.status(500).send('something went wrong')
-    })
+// get current user's playlists
 
 
-}
-const getAPlaylist = (req, res) => {
-    console.log('getting single playlist:')
-    console.log(req.body)
-    User.where({ 'playlists._id': `ObjectId("${req.body.playlist_id}")` }, (err, playlist) => {
-        res.status(200).send(playlist)
-        if (err) return res.status(500).send('something went wrong')
-    })
 
-}
 
-const createPlaylist = (req, res) => {
-    console.log('creating')
-    console.log(req.body.user)
-    User.updateOne({ email: req.body.user },
-        {
-            $addToSet: {
-                playlists: {
-                    name: req.body.playlist_name,
-                    img: req.body.playlist_img,
-                },
-            }
-        }, (err) => {
-            if (err) return res.status(500).send('sign up failed :(')
-            res.status(200).send(req.body.playlist_name)
-        })
-}
 
-const updatePlaylist = (req, res) => {
-    console.log('updating:')
-    console.log(req.body)
-    User.updateOne({ email: req.body.user, 'playlists.name': req.body.playlist_name },
-        {
-            '$set': {
-                'playlists.$.name': req.body.playlist_newName,
-                'playlists.$.img': req.body.playlist_img,
-            }
-        }, (err) => {
-            if (err) return res.status(500).send('sign up failed :(')
-            res.status(200).send(`${req.body.playlist_name} was updated to ${req.body.playlist_newName}`);
-        })
-}
 
-const deletePlaylist = (req, res) => {
-    console.log('deleted: ')
-    console.log(req.body)
-    User.updateOne({ email: req.body.user },
-        {
-            $pull: {
-                playlists: {
-                    name: req.body.playlist_name,
-                },
-            }
-        }, (err) => {
-            if (err) return res.status(500).send('sign up failed :(')
-            res.status(200).send(req.body.playlist_name)
-        })
-}
 
 
 module.exports = {
@@ -147,11 +86,7 @@ module.exports = {
     login,
     updateName,
     updateEmail,
-    getPlaylists,
-    getAPlaylist,
-    createPlaylist,
-    updatePlaylist,
-    deletePlaylist,
+  
     updatePassword,
 }
 
@@ -162,17 +97,7 @@ module.exports = {
 //     })
 // }
 
-// const createUser = (req, res) => {
-//     const user = new User()
-//     user.name = req.body.name
-//     user.password = req.body.pwd
-//     user.avatar = req.body.avt
-//     user.save((err, data) => {
-//         if (err) return res.status(400).send('Something went wrong :( ' + err);
-//         res.status(201).send('Created successfully')
-//     })
-//     // res.send();
-// }
+
 
 // const getUserById = (req, res) => {
 //     let user = Users.filter(item => item.id == request.params.id)

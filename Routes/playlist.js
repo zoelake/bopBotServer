@@ -1,21 +1,20 @@
 const express = require('express');
 const router = express.Router();
-const { getPlaylists, createPlaylist, getPlaylistById, addToLikedPlaylist } = require('../Controller/playlists');
-const authorizeUser = require('../Auth/auth')
+const { getPlaylists, getAPlaylist, createPlaylist, updatePlaylist, deletePlaylist } = require('../Controller/playlists');
+// const authorizeUser = require('../Auth/auth')
 
 
+//GET ALL
+router.post('/get-playlists', getPlaylists)
 
-// router.get('/playlist/:id', getPlaylistById)
-
-//load playlists after authorizing user
-router.get('/playlists', authorizeUser, getPlaylists)
-
-//create a new playlist
-router.post('/new/playlist', createPlaylist)
-
-//add tracks to liked playlist?
-router.patch('new/playlist/liked', addToLikedPlaylist)
-
+//GET ONE
+router.post('/get-a-playlist', getAPlaylist)
+//CREATE PLAYLIST
+router.post('/create-playlist', createPlaylist)
+//UPDATE PLAYLIST
+router.post('/update-playlist', updatePlaylist)
+//DELETE PLAYLIST
+router.post('/delete-playlist', deletePlaylist)
 
 
 module.exports = router;

@@ -1,47 +1,90 @@
 const Playlist = require('../Models/playlist')
 
+//load current users playlists
 const getPlaylists = (req, res) => {
-    // res.json(Todos);
-    Playlist.find({}, (err, playlists) => {
-        res.json(data)
+    console.log(`getting ${req.body.user}'s playlists`)
+    User.findOne({ email: req.body.user }, (err, user) => {
+        if (err) return res.status(500).send('server error')
+        if (user) {
+            return res.status(200).send(user)
+        }
     })
 }
 
+// retrieve a single playlist
+const getAPlaylist = (req, res) => {
+    console.log(`getting playlist with an id of ${req.body.playlist_id}`)
+    User.where({ 'playlists._id': `ObjectId("${req.body.playlist_id}")` }, (err, playlist) => {
+        if (err || !playlist) return res.status(500).send('something went wrong')
+        res.status(200).send(playlist)
+    })
+
+}
+
+// create a new playlist with a name & cover img
 const createPlaylist = (req, res) => {
-    const playlist = new Playlist()
-    playlist.name = req.body.name
-    // playlist.tracks = req.body.tracks
-    // playlist.img = req.body.img
-    // playlist.public = req.body.public
-    playlist.date = req.body.date
-    playlist.owner = req.body.owner
-    playlist.save((err, data) => {
-        if (err) return res.status(400).send('Something went wrong :(');
-        res.status(201).send('Created successfully')
-    })
-    // res.send();
+    User.updateOne({ email: req.body.user },
+        {
+            $addToSet: {
+                playlists: {
+                    name: req.body.playlist_name,
+                    img: req.body.playlist_img,
+                },
+            }
+        }, (err, user) => {
+            if (err || !user) return res.status(500).send('something went wrong')
+            res.status(200).send(`${req.body.playlist_name} was created!`)
+        })
 }
 
+//updating existing selected playlist's name and/or cover img
+const updatePlaylist = (req, res) => {
+    console.log('updating:')
+    console.log(req.body)
+    User.updateOne({ email: req.body.user, 'playlists.name': req.body.playlist_name },
+        {
+            '$set': {
+                'playlists.$.name': req.body.playlist_newName,
+                'playlists.$.img': req.body.playlist_img,
+            }
+        }, (err, user) => {
+            if (err || !user) return res.status(500).send('something went wrong')
+            res.status(200).send(`${req.body.playlist_name} was updated to ${req.body.playlist_newName}`);
+        })
+}
+
+// delete selected playlist 
+const deletePlaylist = (req, res) => {
+    console.log('deleting: ')
+    console.log(req.body)
+    User.updateOne({ email: req.body.user },
+        {
+            $pull: {
+                playlists: {
+                    name: req.body.playlist_name,
+                },
+            }
+        }, (err, user) => {
+            if (err || !user) return res.status(500).send('something went wrong')
+            res.status(200).send(`${req.body.playlist_name} was deleted`)
+        })
+}
+
+
+
+//unused functions (within front-end)
+
+//get a playlist by its id
 const getPlaylistById = (req, res) => {
     let playlist = Playlist.filter(item => item.id == request.params.id)
     res.json(playlist)
 }
 
-const addToLikedPlaylist = (req, res) => {
-    let likedPlaylist = Playlist.findOneAndUpdate({
-        name: 'Liked'
-    }, {
-        $push: {
-            tracks: req.body.track,
-        },
-    })
-    res.json(likedPlaylist)
-}
-
 module.exports = {
     getPlaylists,
+    getAPlaylist,
     createPlaylist,
+    updatePlaylist,
+    deletePlaylist,
     getPlaylistById,
-    
-    addToLikedPlaylist,
 }
