@@ -1,4 +1,5 @@
 const jwt = require('jsonwebtoken')
+//move my secrete to .env file
 
 const authorizeUser = (req,res,next) => {
     jwt.verify(req.query.token, "thisismysecret", (err,data)=>{

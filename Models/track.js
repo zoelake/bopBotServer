@@ -1,6 +1,8 @@
 const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 
+//clean this out & simplify
+
 const TrackSchema = new Schema({
     Country: String,
     Uri: String,

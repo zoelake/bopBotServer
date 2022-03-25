@@ -11,6 +11,7 @@ const config = require('./config')
 
 mongoose.connect(config.MONGODB_URL, (e) => {
    if (e) return console.log(e)
+   //validate that it was connected
 })
 
 app.use(cors());
@@ -22,6 +23,7 @@ app.use(playlistRouter);
 app.use(userRouter);
 app.use(trackRouter);
 
+//move this out of index.js (or delete) => match the pattern
 app.get("/", function (req, res) {
    res.send("<h1>Welcome to bopBot's backend :)</h1>")
 })

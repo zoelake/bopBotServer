@@ -7,16 +7,7 @@ const PlaylistSchema = new Schema({
     name: { type: String, default: 'Untitled Playlist', unique: true },
     tracks: [Track],
     img: String,
-    createdAt: {
-        type: Date,
-        default: () => Date.now(),
-        immutable: true,
-    },
-    updatedAt: {
-        type: Date,
-        default: () => Date.now(),
-    }
-});
+}, { timestamps: true });
 
 
 const Playlist = mongoose.model('Playlist', PlaylistSchema)

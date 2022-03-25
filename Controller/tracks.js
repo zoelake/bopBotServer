@@ -34,7 +34,7 @@ const deleteTrackFromLiked = (req, res) => {
         {
             $pull: {
                 liked: {
-                    Title: req.body.track.Title,
+                    _id: req.body.track._id,
                 },
             }
         }, (err) => {
@@ -51,7 +51,7 @@ const deleteTrackFromPlaylist = (req, res) => {
         {
             '$pull': {
                 'playlists.$.tracks': {
-                    Title: req.body.track.Title
+                    _id: req.body.track._id
                 }
             }
         }, (err) => {
