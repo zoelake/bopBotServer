@@ -32,7 +32,7 @@ const login = (req, res) => {
         if (user.comparePassword(req.body.password)) {
             const token = jwt.sign({ id: user._id }, 'thisismysecret');
             // @zoë change this to sending the token when improving this app later this spring :) 
-            res.status(200).json({user})
+            res.status(200).send(user)
         } else {
             return res.status(500).send('server error')
         }
@@ -43,7 +43,7 @@ const login = (req, res) => {
 const updateName = (req, res) => {
     console.log(req.body)
     User.updateOne({ name: req.body.name }, { $set: { name: req.body.newName } }, (err, user) => {
-        if(err || !user) return res.status(500).send('something went wrong')
+        if (err || !user) return res.status(500).send('something went wrong')
         res.status(200).send(`${req.body.name} was updated to ${req.body.newName}`)
     })
 }
@@ -52,7 +52,7 @@ const updateName = (req, res) => {
 const updateEmail = (req, res) => {
     console.log(req.body)
     User.updateOne({ email: req.body.email }, { $set: { email: req.body.newEmail } }, (err, user) => {
-        if(err || !user) return res.status(500).send('server error')
+        if (err || !user) return res.status(500).send('server error')
         res.status(200).send(`${req.body.email} was updated to ${req.body.newEmail}`)
     })
 }
@@ -78,7 +78,7 @@ module.exports = {
     login,
     updateName,
     updateEmail,
-  
+
     updatePassword,
 }
 
