@@ -44,7 +44,7 @@ const updateName = (req, res) => {
     console.log(req.body)
     User.updateOne({ name: req.body.name }, { $set: { name: req.body.newName } }, (err, user) => {
         if (err || !user) return res.status(500).send('something went wrong')
-        res.status(200).send(`${req.body.name} was updated to ${req.body.newName}`)
+        res.status(200).send(req.body.newName)
     })
 }
 
@@ -53,7 +53,7 @@ const updateEmail = (req, res) => {
     console.log(req.body)
     User.updateOne({ email: req.body.email }, { $set: { email: req.body.newEmail } }, (err, user) => {
         if (err || !user) return res.status(500).send('server error')
-        res.status(200).send(`${req.body.email} was updated to ${req.body.newEmail}`)
+        res.status(200).send(req.body.newEmail)
     })
 }
 
