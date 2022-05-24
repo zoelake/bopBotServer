@@ -10,7 +10,7 @@ const getTracks = (req, res) => {
         if (err) return res.status(409).send('server error')
         console.log(tracks)
         res.status(200).send(tracks)
-    }).limit(1000)
+    }).limit(100)
 }
 
 //add selected track to likes playlist
