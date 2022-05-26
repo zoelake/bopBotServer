@@ -1,6 +1,6 @@
 const express = require('express');
 const router = express.Router();
-const { getTracks, makeTrack, addTrackToLiked, addTrackToPlaylist, deleteTrackFromLiked, deleteTrackFromPlaylist } = require('../Controller/tracks');
+const { getTracks, makeTrack, addTrackToLiked, addTrackToPlaylist, deleteTrackFromLiked, deleteTrackFromPlaylist, filterTracks, filterTrackGenres, filterTrackValues } = require('../Controller/tracks');
 
 //GET ALL
 router.get('/tracks', getTracks)
@@ -18,5 +18,9 @@ router.post('/tracks-add-playlist', addTrackToPlaylist)
 //REMOVE FROM  PLAYLIST
 router.post('/tracks-remove-playlist', deleteTrackFromPlaylist)
 
+//FILTERING
+router.get('/tracks-filter-genre', filterTrackGenres)
+router.get('/tracks-filter-value', filterTrackValues)
+router.get('/tracks-filter', filterTracks)
 
 module.exports = router;

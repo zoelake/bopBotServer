@@ -76,7 +76,42 @@ const addTrackToPlaylist = (req, res) => {
 
 }
 
+const filterTrackGenres = (req, res) => {
+    console.log(req.body)
+    Track.find({ Genre: req.body.Genre }, (err, tracks) => {
+        if (err) return res.status(500).send('something went wrong with the server');
+        if (tracks = []) return res.status(409).send(`No tracks for ${req.body.genre} could be found`);
+        else {
+            console.log(tracks)
+            res.status(200).send(tracks)
+        };
+    })
+}
 
+const filterTrackValues = (req, res) => {
+    console.log(req.body)
+    const filter = req.body.filter;
+    Track.find({ [req.body.filter]: { $gte: req.body.value } }, (err, tracks) => {
+        if (err) return res.status(500).send('something went wrong with the server');
+        if (tracks == []) return res.status(409).send(`No tracks for ${filter} could be found`);
+        else {
+            console.log(tracks)
+            res.status(200).send(tracks)
+        };
+    })
+}
+
+const filterTracks = (req, res) => {
+    console.log(req.body)
+    Track.find({ Genre: req.body.Genre, acoustics: { $gte: req.body.acoustics }, danceability: { $gte: req.body.danceability }, energy: { $gte: req.body.energy }, instrumentalness: { $gte: req.body.instrumentalness }, loudness: { $gte: req.body.loudness }, tempo: { $gte: req.body.tempo } }, (err, tracks) => {
+        if (err) return res.status(500).send('something went wrong with the server');
+        if (!tracks) return res.status(409).send(`No tracks matching params could be found`);
+        else {
+            console.log(tracks)
+            res.status(200).send(tracks)
+        }
+    })
+}
 
 //unused functions (within front-end)
 
@@ -111,7 +146,21 @@ module.exports = {
     //unused functions (within front-end)
     getTrackById,
     makeTrack,
+    //filtering (wip)
+    filterTrackGenres,
+    filterTrackValues,
+    filterTracks
 }
 
 
 
+
+// $and: [
+//     { Genre: req.body.Genre },
+//     { [req.body.acoustics]: { $gte: req.body.acoustics } },
+//     { [req.body.danceability]: { $gte: req.body.danceability } },
+//     { [req.body.energy]: { $gte: req.body.energy } },
+//     { [req.body.instrumentalness]: { $gte: req.body.instrumentalness } },
+//     { [req.body.loudness]: { $gte: req.body.loudness } },
+//     { [req.body.tempo]: { $gte: req.body.tempo } },
+// ]
