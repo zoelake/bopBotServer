@@ -6,9 +6,9 @@ const mongoose = require('mongoose');
 const playlistRouter = require('./Routes/playlist.js');
 const userRouter = require('./Routes/user.js');
 const trackRouter = require('./Routes/track.js');
+const config = require('./config')
 
-
-mongoose.connect(process.env.MONGODB_URL, (e) => {
+mongoose.connect(process.env.MONGODB_URL || config.MONGODB_URL, (e) => {
    if (e) return console.log(e)
    //validate that it was connected
 })
