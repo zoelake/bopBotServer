@@ -21,6 +21,6 @@ router.post('/tracks-remove-playlist', deleteTrackFromPlaylist)
 //FILTERING
 router.get('/tracks-filter-genre', filterTrackGenres)
 router.get('/tracks-filter-value', filterTrackValues)
-router.get('/tracks-filter', filterTracks)
+router.post('/tracks-filter', filterTracks)
 
 module.exports = router;
