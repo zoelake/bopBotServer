@@ -1,2 +1,2 @@
-# bopBot Server Side Application
-Server side application that handles all CRUD for [bopBot](https://github.com/zoelake/bopBot).  Hosted remotely on Heroku alongside the bopBot database which is hosted on MongoDB; this allows bopBot to be run remotely without the use of a local host.
+## bopBot Server Side Application
+The bopBot Server Side Application is an essential component of the [bopBot](https://github.com/zoelake/bopBot) project. Hosted on Cyclic, it serves as essential middleware to handle all of our CRUD (Create, Read, Update, and Delete) operations in tandem with the bopBot database on MongoDB. This setup enables bopBot to be deployed and run remotely without relying on a local host!
