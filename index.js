@@ -2,7 +2,7 @@ const express = require('express')
 const app = express();
 const cors = require('cors')
 const mongoose = require('mongoose');
-
+require('dotenv').config()
 const playlistRouter = require('./Routes/playlist.js');
 const userRouter = require('./Routes/user.js');
 const trackRouter = require('./Routes/track.js');
